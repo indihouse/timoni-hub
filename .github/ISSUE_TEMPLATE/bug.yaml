@@ -1,0 +1,65 @@
+name: Bug
+description: Report something that doesn't work how it should.
+labels: ['bug']
+body:
+- type: checkboxes
+  id: checklist
+  attributes:
+    label: Checklist
+    options:
+      - label: I did not find a related open issue.
+        required: true
+- type: markdown
+  attributes:
+    value: |-
+      Thank you for filing a bug. Please complete the form below so we can triage, reproduce, and fix your issue.
+
+- id: desc
+  type: textarea
+  attributes:
+    label: Description
+    description: A clear and concise description of the bug.
+  validations:
+    required: true
+
+- type: input
+  id: modules
+  attributes:
+    label: Impacted Module(s)
+    description: list of module-name:[version(s)], comma separated. You can use `all` as placeholder for both module and version.
+  validations:
+    required: true
+
+- type: input
+  id: timoni-version
+  attributes:
+    label: Timoni and CUE version
+    description: timoni version -o yaml
+  validations:
+    required: true
+
+- id: logs
+  type: textarea
+  attributes:
+    label: Log Output
+    description: | 
+      Include any relevant log output. 
+
+- id: repro
+  type: textarea
+  attributes:
+    label: Steps to reproduce the issue
+    description: Steps needed to reproduce the issue.
+  validations:
+    required: true
+
+- id: 'repro-cue'
+  type: 'textarea'
+  attributes:
+    label: CUE value
+    description: CUE value needed to reproduce the issue. See the following as an example.
+    render: cue 
+    placeholder: |
+      values: {
+        image: digest: "sha256:baadf00d"
+      }
