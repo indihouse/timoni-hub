@@ -1,0 +1,45 @@
+name: 'Enhancement'
+description: 'Feature request or new module request.'
+labels: ['enhancement']
+body:
+- type: checkboxes
+  id: checklist
+  attributes:
+    label: Checklist
+    options:
+      - label: I did not find a related open enhancement request.
+        required: true
+      - label: I understand that enhancement requests needs to be discussed before starting any work on it.
+        required: true
+- type: 'markdown'
+  attributes:
+    value: |-
+      Thank you for filing a feature request. Please complete the form below so we evaluate your feature request.
+
+- id: 'fr-desc'
+  type: 'textarea'
+  attributes:
+    label: 'Describe the feature or module'
+    description: "Describe the feature or module that you're requesting."
+  validations:
+    required: true
+
+- type: input
+  id: modules
+  attributes:
+    label: Target Module(s)
+    description: |
+      list of module-name:[version(s)], comma separated. You can use `all` as placeholder for both module and version. Use `new` if it's a new module.
+  validations:
+    required: true
+
+- id: 'importance'
+  type: 'textarea'
+  attributes:
+    label: 'Importance'
+    description: | 
+      State whether you consider this request a nice-to-have, pain point, or blocker.
+      Elaborate if you have any other details:
+      * How would this feature/resource impact you?
+      * Urgency. If this is a blocker, when would you need it by? If it's not yet a
+        blocker, do you foresee it becoming a blocker at some point, and when?
