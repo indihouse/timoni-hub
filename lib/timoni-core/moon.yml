@@ -1,0 +1,6 @@
+type: 'library'
+language: 'cue'
+
+project:
+  name: 'timoni-core'
+  description: 'Timoni core library'
