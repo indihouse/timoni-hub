@@ -1,0 +1,16 @@
+fileGroups:
+  sources:
+    - '**/*.cue'
+    - '!test/*.cue'
+    - '!**/*_tool.cue'
+  bash_sources:
+    - '**/*.sh'
+  tests:
+    - 'test/*.cue'
+  cuemod:
+    - 'cue.mod/**/*'
+  libs:
+    - '/lib/**/build/*.tar.gz'
+  modbuild:
+    - 'build/*.yaml'
+
