@@ -1,0 +1,6 @@
+tasks:
+  lint:
+    platform: system
+    command: shellcheck @files(bash_sources)
+    inputs:
+      - '@globs(bash_sources)'

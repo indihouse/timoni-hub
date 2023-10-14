@@ -1,0 +1,179 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: aria2
+    app.kubernetes.io/version: 0.0.0-devel
+  name: aria2
+  namespace: default
+spec:
+  ports:
+  - name: rpc
+    port: 6800
+    protocol: TCP
+    targetPort: rpc
+  selector:
+    app.kubernetes.io/name: aria2
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: aria2
+    app.kubernetes.io/version: 0.0.0-devel
+  name: aria2-bittorrent
+  namespace: default
+spec:
+  ports:
+  - name: bt-0
+    port: 6666
+    protocol: TCP
+    targetPort: 6666
+  - name: bt-1
+    port: 6667
+    protocol: TCP
+    targetPort: 6667
+  - name: bt-2
+    port: 6668
+    protocol: TCP
+    targetPort: 6668
+  - name: bt-3
+    port: 6669
+    protocol: TCP
+    targetPort: 6669
+  - name: bt-4
+    port: 6670
+    protocol: TCP
+    targetPort: 6670
+  - name: bt-5
+    port: 6671
+    protocol: TCP
+    targetPort: 6671
+  - name: bt-6
+    port: 6672
+    protocol: TCP
+    targetPort: 6672
+  - name: bt-7
+    port: 6673
+    protocol: TCP
+    targetPort: 6673
+  - name: bt-8
+    port: 6674
+    protocol: TCP
+    targetPort: 6674
+  - name: bt-9
+    port: 6675
+    protocol: TCP
+    targetPort: 6675
+  selector:
+    app.kubernetes.io/name: aria2
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/name: aria2
+    app.kubernetes.io/version: 0.0.0-devel
+  name: aria2
+  namespace: default
+stringData:
+  rpcToken: supersecret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: aria2
+    app.kubernetes.io/version: 0.0.0-devel
+  name: aria2
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: aria2
+  template:
+    metadata:
+      annotations:
+        house.indi.checksum/secret: 59e86b01
+      labels:
+        app.kubernetes.io/name: aria2
+    spec:
+      containers:
+      - args:
+        - --rpc-secret=$(RPC_TOKEN)
+        - --max-concurrent-downloads=5
+        - --listen-port=6666-6676
+        - --console-log-level=notice
+        env:
+        - name: RPC_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: rpcToken
+              name: aria2
+        image: ghcr.io/indihouse/aria2:v1.36.0@sha256:015b0c4d993d85846a15505e66c25ff717261f292d7168c70ab18ac5efbc4f00
+        imagePullPolicy: IfNotPresent
+        name: aria2
+        ports:
+        - containerPort: 6800
+          name: rpc
+          protocol: TCP
+        - containerPort: 6666
+          name: bt-0
+          protocol: TCP
+        - containerPort: 6667
+          name: bt-1
+          protocol: TCP
+        - containerPort: 6668
+          name: bt-2
+          protocol: TCP
+        - containerPort: 6669
+          name: bt-3
+          protocol: TCP
+        - containerPort: 6670
+          name: bt-4
+          protocol: TCP
+        - containerPort: 6671
+          name: bt-5
+          protocol: TCP
+        - containerPort: 6672
+          name: bt-6
+          protocol: TCP
+        - containerPort: 6673
+          name: bt-7
+          protocol: TCP
+        - containerPort: 6674
+          name: bt-8
+          protocol: TCP
+        - containerPort: 6675
+          name: bt-9
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: jsonrpc?method=system.listMethods&id=probes'
+            port: 6800
+        resources:
+          limits:
+            ephemeral-storage: 100Mi
+          requests:
+            cpu: 100m
+            ephemeral-storage: 100Mi
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 11000
+          runAsUser: 11000
+        startupProbe:
+          httpGet:
+            path: jsonrpc?method=system.listMethods&id=probes'
+            port: 6800
+        volumeMounts:
+        - mountPath: /download
+          name: download
+      serviceAccountName: aria2
+      volumes:
+      - name: download
+---

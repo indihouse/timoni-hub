@@ -1,0 +1,73 @@
+tasks:
+  vendor:
+    command: noop
+    deps:
+      - '~:vendor_k8s'
+      - '~:vendor_local'
+    inputs: []
+
+  vendor_k8s:
+    platform: system
+    command: timoni mod vendor k8s -v $K8S_VERSION
+    env:
+      K8S_VERSION: '1.28'
+    inputs: []
+    outputs:
+      - cue.mod/gen/k8s.io/**/*
+
+  vendor_local:
+    platform: system
+    command: 
+      - '$workspaceRoot/tool/buildsystem/vendor-local.sh'
+      - '$project'
+    deps:
+      - '^:build'
+    inputs:
+      - '@files(libs)'
+      - /tool/buildsystem/vendor-local.sh
+    outputs:
+      - cue.mod/pkg/**/*
+
+  lint:
+    platform: system
+    command: timoni mod lint .
+    deps:
+      - '~:vendor'
+    inputs:
+      - '@globs(sources)'
+
+  build:
+    platform: system
+    command:
+      - '$workspaceRoot/tool/buildsystem/build-module.sh'
+      - '$project'
+      - '@files(tests)'
+    deps:
+      - '~:vendor'
+    inputs:
+      - 'globs(tests)'
+      - 'globs(sources)'
+      - /tool/buildsystem/build-module.sh
+    outputs:
+      - build/
+
+  test:
+    platform: system
+    command: '$workspaceRoot/tool/buildsystem/test-module.sh'
+    deps:
+      - '~:build'
+    inputs:
+      - test/*.expected.yaml
+      - 'globs(tests)'
+      - 'globs(sources)'
+      - /tool/buildsystem/test-module.sh
+
+  score:
+    platform: system
+    command: '$workspaceRoot/tool/buildsystem/score-module.sh'
+    deps:
+      - '~:build'
+    inputs:
+      - 'globs(tests)'
+      - 'globs(sources)'
+      - /tool/buildsystem/score-module.sh

@@ -1,0 +1,6 @@
+tasks:
+  fmt:
+    command: cue fmt ./... 
+    inputs:
+      - '@globs(sources)'
+      - '@globs(tests)'
