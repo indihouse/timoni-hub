@@ -1,0 +1,6 @@
+type: 'library'
+language: 'cue'
+
+project:
+  name: 'kue'
+  description: 'Kubernetes CUE library'
