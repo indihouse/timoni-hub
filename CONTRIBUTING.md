@@ -39,6 +39,8 @@ We welcome contributions from the community! Here are some guidelines for contri
 
 We follow the Conventional Commits standard for commit messages. Please adhere to the guidelines outlined in [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) when writing your commit messages.
 
+This is important for our release workflow. **Every commit** landing on `main` will be automatically released. [Conventional Commits Next Version](https://crates.io/crates/conventional_commits_next_version) is used to automatically determine if a module release is mandatory, and if so which version should be released. It's based on commit history and modified files (module dependencies included).
+
 ### Running Checks
 
 You can run checks on the codebase by using `moon`. To run all checks, use the following command:
