@@ -71,3 +71,18 @@ tasks:
       - 'globs(tests)'
       - 'globs(sources)'
       - /tool/buildsystem/score-module.sh
+
+  release:
+    platform: system
+    command: 
+      - '$workspaceRoot/tool/buildsystem/release-module.sh'
+      - '$project'
+    local: true # do not run with `moon check` or `moon ci`
+    deps:
+      - '^:release'
+      - '~:vendor'
+    inputs:
+      - 'globs(sources)'
+      - '@files(libs)'
+      - /tool/buildsystem/release-module.sh
+
