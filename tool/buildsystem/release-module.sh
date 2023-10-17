@@ -54,7 +54,7 @@ fi
 
 # Release the module
 echo "Need to release $1 $new_version"
-timoni mod push . "$repository" --version="$new_version"
+timoni mod push . "$repository" --version="$new_version" --sign=cosign
 
 # Append release note to CHANGELOG.md
 echo "- **$1**:$new_version" >> "$gitroot/module_release.md"
