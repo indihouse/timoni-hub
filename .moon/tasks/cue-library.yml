@@ -6,3 +6,9 @@ tasks:
       - '@globs(sources)'
     outputs:
       - 'build/'
+
+  # We currently do not release library,
+  # this is only here to trigger dependents release
+  release:
+    command: noop
+    inputs: []

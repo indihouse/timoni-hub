@@ -63,6 +63,7 @@ tags
 # library and module build
 lib/**/build
 module/**/build
+module_release.md
 
 ## moon ##
 .moon/cache

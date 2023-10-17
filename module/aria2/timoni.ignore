@@ -12,3 +12,10 @@ go.sum
 # CUE
 *_tool.cue
 debug_values.cue
+
+# Test
+test/
+
+# Build system
+moon.yml
+build/
