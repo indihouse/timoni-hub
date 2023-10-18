@@ -1,0 +1,10 @@
+type: application
+language: cue
+dependsOn:
+  - kue 
+  - timoni-core
+  - buildsystem
+
+project:
+  name: 'prometheus-node-exporter'
+  description: 'prometheus-node-exporter timoni module'
