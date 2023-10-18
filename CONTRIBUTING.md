@@ -70,3 +70,13 @@ The testing process involves generating Kubernetes manifests using the value fil
 - Libraries can be found in the `lib/<lib_name>` directory.
 
 We appreciate your contributions to Timoni-Hub and look forward to your involvement in the project. If you have any questions or need assistance, feel free to reach out to the maintainers. Happy contributing!
+
+## Scaffolding a new module
+
+To generate boilerplate for a new module, you can use moon [code generation](https://moonrepo.dev/docs/guides/codegen):
+
+```shell
+moon generate minimal module/<module-dir>
+```
+
+> It's a good idea to use the module name for <module-dir>
