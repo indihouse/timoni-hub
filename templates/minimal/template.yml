@@ -1,0 +1,22 @@
+# https://moonrepo.dev/docs/config/template
+$schema: 'https://moonrepo.dev/schemas/template.json'
+
+# REQUIRED: Name of the template in a human readable format.
+title: 'minimal'
+
+# REQUIRED: Description of what the template is for and other relevant information.
+description: 'Scaffolds a minimal timoni module.'
+
+# Mapping of variables that will be interpolated and rendered within template files.
+# Users will be prompted to provide a value when running the generator.
+variables:
+  name:
+    type: string
+    default: ''
+    required: true
+    prompt: Module name?
+  registry:
+    type: 'string'
+    default: ghcr.io/indihouse/timoni
+    required: true
+
