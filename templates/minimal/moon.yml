@@ -1,0 +1,10 @@
+type: application
+language: cue
+dependsOn:
+  - kue 
+  - timoni-core
+  - buildsystem
+
+project:
+  name: '{{ name }}'
+  description: '{{ name }} timoni module'
