@@ -8,7 +8,7 @@ package main
 // Defaults
 values: {
 	image: {
-		digest:     "sha256:302028d1ea65a50a32d9ae81fda1a964e45a620a9575e36036b9a55a33395f16"
-		tag:        "1.25.2"
+		digest: "sha256:40ba9ef2dc8d7564d76656feca7f679062d2df71653618211d38c0ec51ebc28c"
+		tag:    "v1.6.1"
 	}
 }

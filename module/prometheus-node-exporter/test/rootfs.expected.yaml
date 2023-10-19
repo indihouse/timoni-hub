@@ -23,10 +23,6 @@ spec:
         - --path.rootfs=/host/root
         image: prom/node-exporter:1.25.2@sha256:302028d1ea65a50a32d9ae81fda1a964e45a620a9575e36036b9a55a33395f16
         imagePullPolicy: IfNotPresent
-        livenessProbe:
-          httpGet:
-            path: /
-            port: metrics
         name: node-exporter
         ports:
         - containerPort: 9100
@@ -49,6 +45,22 @@ spec:
           mountPropagation: HostToContainer
           name: root
           readOnly: true
+        resources:
+          limits:
+            ephemeral-storage: 100Mi
+          requests:
+            cpu: 100m
+            ephemeral-storage: 100Mi
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
       volumes:
       - hostPath:
           path: /proc
@@ -59,6 +71,10 @@ spec:
       - hostPath:
           path: /
         name: root
+      securityContext:
+        fsGroup: 65532
+        runAsGroup: 65532
+        runAsUser: 65532
 ---
 apiVersion: v1
 kind: Service

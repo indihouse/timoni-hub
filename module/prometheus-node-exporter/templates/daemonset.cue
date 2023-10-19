@@ -43,12 +43,6 @@ import (
 						}
 						ports: _ports.$out
 
-						livenessProbe: {
-							httpGet: {
-								path: "/"
-								port: _ports.metrics.name
-							}
-						}
 						readinessProbe: {
 							httpGet: {
 								path: "/"
