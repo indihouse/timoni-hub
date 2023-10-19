@@ -48,7 +48,7 @@ import (
 	config: #Config
 
 	objects: {
-		svc: #Service & {_config: config}
-		ds: #DaemonSet & { _config: config }
+		svc: #Service & {_config:   config}
+		ds:  #DaemonSet & {_config: config}
 	}
 }
