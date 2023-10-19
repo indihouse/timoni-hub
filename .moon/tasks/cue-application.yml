@@ -23,7 +23,6 @@ tasks:
     deps:
       - '^:build'
     inputs:
-      - '@files(libs)'
       - /tool/buildsystem/vendor-local.sh
     outputs:
       - cue.mod/pkg/**/*
@@ -34,20 +33,19 @@ tasks:
     deps:
       - '~:vendor'
     inputs:
-      - '@globs(sources)'
+      - '@group(sources)'
 
   build:
     platform: system
     command:
       - '$workspaceRoot/tool/buildsystem/build-module.sh'
       - '$project'
-      - '@files(tests)'
     deps:
       - '~:vendor'
     inputs:
-      - 'globs(tests)'
-      - 'globs(sources)'
       - /tool/buildsystem/build-module.sh
+      - 'group(sources)'
+      - test/*.cue
     outputs:
       - build/
 
@@ -57,10 +55,8 @@ tasks:
     deps:
       - '~:build'
     inputs:
-      - test/*.expected.yaml
-      - 'globs(tests)'
-      - 'globs(sources)'
       - /tool/buildsystem/test-module.sh
+      - 'test/*.expected.yaml'
 
   score:
     platform: system
@@ -68,8 +64,6 @@ tasks:
     deps:
       - '~:build'
     inputs:
-      - 'globs(tests)'
-      - 'globs(sources)'
       - /tool/buildsystem/score-module.sh
 
   release:
@@ -82,7 +76,6 @@ tasks:
       - '^:release'
       - '~:vendor'
     inputs:
-      - 'globs(sources)'
-      - '@files(libs)'
+      - 'group(sources)'
       - /tool/buildsystem/release-module.sh
 
