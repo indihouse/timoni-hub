@@ -1,19 +1,11 @@
 #!/usr/bin/env bash
 
-set -e
-
 builddir="build"
 testdir="test"
 
-testcases=$(find $testdir -type f -name "*.expected.yaml")
-
-# Check if at least one test is provided
-if [ -z "$testcases" ]; then
-    echo "No test to run."
-    exit 0
-fi
-
-for tc in $testcases; do
+shopt -s globstar nullglob
+returncode=0
+for tc in "$testdir"/*.expected.yaml; do
 	filename=$(basename "$tc")
 	test="${filename%%.*}"
 	actual="$builddir/$test.yaml"
@@ -27,4 +19,10 @@ for tc in $testcases; do
 
 	# Diff actual and expected
 	dyff between -is "$tc" "$actual"
+	status=$?
+	if [ $status -ne 0 ]; then
+		returncode=$status
+	fi
 done
+
+exit $returncode

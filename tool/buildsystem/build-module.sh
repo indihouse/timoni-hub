@@ -3,10 +3,11 @@
 set -e
 
 builddir="build"
+testdir="test"
 
 # Check if at least one argument is provided
 if [ $# -lt 1 ]; then
-    echo "Usage: $0 module-name [file2 file2 file3 ...]"
+    echo "Usage: $0 module-name"
     exit 1
 fi
 
@@ -18,10 +19,20 @@ printf "Building %s with default values..." "$1"
 timoni build "$1" -n default . > "$builddir/default.yaml"
 echo " ✅"
 
-for valuefile in "${@:2}"; do
-	filename=$(basename "$valuefile")
+# Build test values
+shopt -s globstar nullglob
+returncode=0
+for f in "$testdir"/*.cue; do
+	filename=$(basename "$f")
 
-	printf "Building %s with $filename..." "$1"
-	timoni build "$1" -n default -f "$valuefile" . > "$builddir/${filename%.*}.yaml"
-	echo " ✅"
+	printf "Building %s with $f..." "$1"
+	timoni build "$1" -n default -f "$f" . > "$builddir/${filename%.*}.yaml"
+	status=$?
+	if [ $status -ne 0 ]; then
+		returncode=$status
+	else
+		echo " ✅"
+	fi
 done
+
+exit $returncode
