@@ -1,0 +1,10 @@
+type: application
+language: cue
+dependsOn:
+  - kue 
+  - timoni-core
+  - buildsystem
+
+project:
+  name: 'overseerr'
+  description: 'overseerr timoni module'
