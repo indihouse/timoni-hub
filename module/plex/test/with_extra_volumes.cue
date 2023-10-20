@@ -17,16 +17,15 @@ values: {
 	configVolume: emptyDir: {}
 	extraVolumes: [
 		{
-			name: "tv"
+			name:      "tv"
 			mountPath: "/tv"
-			source: emptyDir:  {}
+			source: emptyDir: {}
 		}, {
-			name: "movies"
+			name:      "movies"
 			mountPath: "/movies"
-			source: emptyDir:  {}
-		}
+			source: emptyDir: {}
+		},
 	]
-
 
 	podSecurityContext: {
 		runAsUser:  65532
