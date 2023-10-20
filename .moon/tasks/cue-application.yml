@@ -44,7 +44,7 @@ tasks:
       - '~:vendor'
     inputs:
       - /tool/buildsystem/build-module.sh
-      - 'group(sources)'
+      - '**/*.cue'
       - test/*.cue
     outputs:
       - build/
